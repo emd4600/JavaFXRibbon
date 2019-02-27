@@ -23,12 +23,14 @@ import java.util.Collections;
 import java.util.List;
 
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -52,6 +54,33 @@ import javafx.scene.control.Tooltip;
 public class RibbonTab implements Styleable {
 	
 	public static final String DEFAULT_STYLE_CLASS = "ribbon-tab";
+	public static final String DEFAULT_GROUP_NAME = "NOGROUP";
+	
+private final StringProperty contextualGroupName = new SimpleStringProperty(this, "contextualGroupName", DEFAULT_GROUP_NAME);
+	
+	/**
+	 * The amount of horizontal space between each child in the ribbon group.
+	 * @return
+	 */
+	public final StringProperty contextualGroupNameProperty() {
+		return contextualGroupName;
+	}
+	
+	/**
+	 * Gets the value of the property spacing.
+	 * @return
+	 */
+	public final String getContextualGroupName() {
+		return contextualGroupName.get();
+	}
+	
+	/**
+	 * Sets the value of the property spacing.
+	 * @param spacing
+	 */
+	public void setContextualGroupName(String newName) {
+		this.contextualGroupName.set(newName);
+	}
 	
 	/**
 	 * Constructs a new ribbon tab with no title.
@@ -69,6 +98,11 @@ public class RibbonTab implements Styleable {
 		setText(text);
 		getGroups().addAll(groups);
 		getStyleClass().add(DEFAULT_STYLE_CLASS);
+		
+		contextualGroupNameProperty().addListener((obs, oldValue, newValue) -> {
+			ribbon.get().constructTabsPane();
+		});
+		//
 	}
 	
 	

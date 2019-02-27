@@ -72,7 +72,7 @@ public class RibbonGroupSkin extends SkinBase<RibbonGroup> {
 		groupPane.setBottom(title);
 		BorderPane.setAlignment(hbox, Pos.TOP_CENTER);
 		
-		groupPane.setMinHeight(getSkinnable().getPrefHeight());
+		//groupPane.setMinHeight(getSkinnable().getPrefHeight());
 		
 		BorderPane.setAlignment(title, Pos.CENTER);
 		

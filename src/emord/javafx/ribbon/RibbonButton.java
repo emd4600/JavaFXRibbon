@@ -45,7 +45,7 @@ public class RibbonButton extends Button {
 			}
 		});
 		
-		setPadding(new Insets(0));
+		//setPadding(new Insets(0));
 	}
 	
 	 /** {@inheritDoc} */

@@ -50,8 +50,8 @@ public class RibbonCustomMenu extends RibbonMenu {
 	}
 	
 	public void setDefaultStyling() {
-		node.getStyleClass().add(DEFAULT_STYLE_CLASS);
 		node.getStyleClass().add("context-menu");
+		node.getStyleClass().add(DEFAULT_STYLE_CLASS);
 	}
 	
 	public Node getNode() {

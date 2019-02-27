@@ -420,6 +420,10 @@ public class Ribbon extends Control {
     public final void setRibbonState(RibbonState state) {
     	ribbonState.set(state);
     }
+    
+    public void constructTabsPane() {
+    	((RibbonSkin)getSkin()).constructTabsPane();
+    }
 
     /** {@inheritDoc} */
     @Override protected Skin<?> createDefaultSkin() {

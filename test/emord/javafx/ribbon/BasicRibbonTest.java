@@ -55,6 +55,54 @@ public class BasicRibbonTest extends Application {
 		
 		return new RibbonTab("Another test", group1, group2);
 	}
+
+	private RibbonTab createTab3() {
+		RibbonGroup group1 = new RibbonGroup("Test Group 1");
+		group1.getNodes().addAll(
+				new Button("Example1"),
+				new Button("Example2"));
+		
+		RibbonGroup group2 = new RibbonGroup("Test Group 1");
+		group2.getNodes().addAll(
+				new Button("Example3"),
+				new Button("Example4"));
+		
+		RibbonTab tab = new RibbonTab("Another test", group1, group2);
+		tab.setContextualGroupName("Test Tab Group");
+		return tab;
+	}
+
+	private RibbonTab createTab4() {
+		RibbonGroup group1 = new RibbonGroup("Test Group 1");
+		group1.getNodes().addAll(
+				new Button("Example1"),
+				new Button("Example2"));
+		
+		RibbonGroup group2 = new RibbonGroup("Test Group 1");
+		group2.getNodes().addAll(
+				new Button("Example3"),
+				new Button("Example4"));
+		
+		RibbonTab tab = new RibbonTab("Another test", group1, group2);
+		tab.setContextualGroupName("Test Tab Group");
+		return tab;
+	}
+
+	private RibbonTab createTab5() {
+		RibbonGroup group1 = new RibbonGroup("Test Group 1");
+		group1.getNodes().addAll(
+				new Button("Example1"),
+				new Button("Example2"));
+		
+		RibbonGroup group2 = new RibbonGroup("Test Group 1");
+		group2.getNodes().addAll(
+				new Button("Example3"),
+				new Button("Example4"));
+		
+		RibbonTab tab = new RibbonTab("Another test", group1, group2);
+		tab.setContextualGroupName("Another Group");
+		return tab;
+	}
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -72,10 +120,13 @@ public class BasicRibbonTest extends Application {
 		
 		RibbonTab tab1 = createTab1();
 		RibbonTab tab2 = createTab2();
+		RibbonTab tab3 = createTab3();
+		RibbonTab tab4 = createTab4();
+		RibbonTab tab5 = createTab5();
 		
 		Ribbon ribbon = main.getRibbon();
 		ribbon.setContentHeight(115);
-		ribbon.getTabs().addAll(tab1, tab2);
+		ribbon.getTabs().addAll(tab1, tab2, tab3, tab4, tab5);
 		
 		addProgramButton(ribbon);
 		
