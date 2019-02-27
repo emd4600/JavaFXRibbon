@@ -6,3 +6,5 @@ I decided to create my own version because tehre were some features that ribbon 
  - Being able to hide/show the ribbon, by using a small button or double-clicking the tabs.
  - Proper support for ribbon buttons, adapting the text to optimize the used space.
  - Support for a menu tab.
+ 
+Requires JNA v5.2.0: https://github.com/java-native-access/jna
