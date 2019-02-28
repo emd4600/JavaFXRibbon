@@ -179,6 +179,25 @@ public class RibbonSkin extends SkinBase<Ribbon> {
 					groupHeader.setMaxHeight(0);
 					groupHeader.setPrefHeight(0);
 				}
+				else {
+					javafx.scene.paint.Color groupColor = getSkinnable().getContextualGroupColor(tab.getContextualGroupName());
+					if (groupColor != null) {
+						String red = Double.toString(groupColor.getRed() * 255);
+						if (red.contains("."))
+							red = red.substring(0, red.indexOf("."));
+						String green = Double.toString(groupColor.getGreen() * 255);
+						if (green.contains("."))
+							green = green.substring(0, green.indexOf("."));
+						String blue = Double.toString(groupColor.getBlue() * 255);
+						if (blue.contains("."))
+							blue = blue.substring(0, blue.indexOf("."));
+						String colorString = "-fx-ribbon-contextual-color: rgb(" + red + ", " + green + ", " + blue + ");";
+						//System.out.println(colorString);
+						groupHeader.setStyle(colorString);
+					}
+					else
+						groupHeader.setStyle("-fx-ribbon-contextual-color: rgb(128, 128, 128);");
+				}
 				
 				contextualGroupsContainer.getChildren().add(groupHeader);
 			}

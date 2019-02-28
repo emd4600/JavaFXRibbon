@@ -19,6 +19,9 @@
 
 package emord.javafx.ribbon;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.sun.javafx.css.converters.SizeConverter;
 
 import emord.javafx.ribbon.skin.RibbonSkin;
@@ -39,6 +42,7 @@ import javafx.scene.AccessibleAttribute;
 import javafx.scene.control.Control;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Skin;
+import javafx.scene.paint.Color;
 
 public class Ribbon extends Control {
 	
@@ -59,6 +63,8 @@ public class Ribbon extends Control {
     private static final double DEFAULT_TAB_MIN_HEIGHT = 0;
 
     private static final double DEFAULT_TAB_MAX_HEIGHT = Double.MAX_VALUE;
+    
+    public Map<String, Color> contextualGroupHeadersMap = new HashMap<String, Color>(); 
     
     public Ribbon() {
     	getStyleClass().setAll(DEFAULT_STYLE_CLASS);
@@ -648,5 +654,13 @@ public class Ribbon extends Control {
 
             return bestTab;
         }
+    }
+    
+    public void setContextualGroupColor(String groupName, Color groupColor) {
+    	contextualGroupHeadersMap.put(groupName, groupColor);
+    }
+    
+    public Color getContextualGroupColor(String groupName) {
+    	return contextualGroupHeadersMap.get(groupName);
     }
 }
