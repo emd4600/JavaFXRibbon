@@ -22,6 +22,7 @@ package emord.javafx.ribbon.skin;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.util.List;
+import java.util.ResourceBundle.Control;
 
 import com.sun.glass.events.KeyEvent;
 import com.sun.jna.Callback;
@@ -46,6 +47,8 @@ import emord.javafx.ribbon.RibbonProgramButton;
 import emord.javafx.ribbon.RibbonTab;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.css.PseudoClass;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -64,6 +67,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -139,6 +143,7 @@ public class RibbonSkin extends SkinBase<Ribbon> {
 	public void constructTabsPane() {
 		tabsPane.getChildren().clear();
 		contextualGroupsContainer.getChildren().clear();
+		contextualGroupsContainer.getChildren().clear();
 		
 		//groupsContainer.setMinWidth(HBox.USE_PREF_SIZE);
 		
@@ -171,12 +176,14 @@ public class RibbonSkin extends SkinBase<Ribbon> {
 				groupHeader.getStyleClass().setAll(CONTEXTUAL_HEADER_CLASS);
 				groupHeader.setText(tab.getContextualGroupName());
 				groupHeader.setPrefWidth(0);
-				groupHeader.setMinWidth(0);
+				groupHeader.setMinWidth(groupHeader.USE_PREF_SIZE);
+				groupHeader.setMaxWidth(groupHeader.USE_PREF_SIZE);
 				groupHeader.setMinHeight(0);
 				
 				if ((tab.getContextualGroupName() == RibbonTab.DEFAULT_GROUP_NAME)) {
 					groupHeader.setOpacity(0);
-					groupHeader.setMaxHeight(0);
+					groupHeader.setMinHeight(groupHeader.USE_PREF_SIZE);
+					groupHeader.setMaxHeight(groupHeader.USE_PREF_SIZE);
 					groupHeader.setPrefHeight(0);
 				}
 				else {
@@ -234,7 +241,7 @@ public class RibbonSkin extends SkinBase<Ribbon> {
             		if (item instanceof RibbonProgramButton) {
             			RibbonProgramButton btn = (RibbonProgramButton)item;
             			Button groupHeader = (Button)contextualGroupsContainer.getChildren().get(groupIndex);
-            			groupHeader.setPrefWidth(groupHeader.getPrefWidth() + btn.getWidth());
+            			groupHeader.setPrefWidth(btn.getWidth());
             			//groupHeader.setMinWidth(groupHeader.getWidth() + btn.getWidth());
             			//groupHeader.setMaxWidth(groupHeader.getWidth() + btn.getWidth());
             			groupIndex++;
@@ -271,7 +278,42 @@ public class RibbonSkin extends SkinBase<Ribbon> {
 		
 		//tabStuffContainer.setMinHeight(0);
 		topStuffContainer.setBottom(tabsPane);
-		topStuffContainer.setCenter(contextualGroupsContainer);
+
+		StackPane topStackPane = new StackPane();
+		
+		BorderPane quickAccessParent = new BorderPane();
+		quickAccessParent.setMinWidth(0);
+		quickAccessParent.setMaxWidth(Pane.USE_PREF_SIZE);
+		ObservableList<String> classes = quickAccessParent.getStyleClass();
+		//quickAccessParent.getStyleClass().setAll("ribbon-app-icon");
+		//Insets padding = new Insets(quickAccessParent.getPadding().getLeft());
+		//quickAccessParent.getStyleClass().setAll(classes);
+		
+		getSkinnable().quickAccessContainer.setAlignment(Pos.CENTER_LEFT);
+		getSkinnable().quickAccessContainer.setMinWidth(0);
+		getSkinnable().quickAccessContainer.setMaxWidth(Pane.USE_PREF_SIZE);
+		getSkinnable().quickAccessContainer.getStyleClass().setAll("ribbon-quick-access-toolbar");
+		
+		topStackPane.setAlignment(getSkinnable().quickAccessContainer, Pos.CENTER_LEFT);
+		topStackPane.getChildren().add(contextualGroupsContainer);
+		
+		
+		ImageView appIcon = new ImageView();
+		appIcon.setFitWidth(1.3333333333333333333333333333333 * javafx.scene.text.Font.getDefault().getSize());
+		appIcon.setFitHeight(1.3333333333333333333333333333333 * javafx.scene.text.Font.getDefault().getSize());
+		appIcon.getStyleClass().setAll("ribbon-app-icon");
+		StackPane appIconPane = new StackPane();
+		appIconPane.getStyleClass().setAll("ribbon-app-icon");
+		appIconPane.getChildren().add(appIcon);
+		quickAccessParent.setLeft(appIconPane);
+		//quickAccessParent.setMargin(appIcon, padding);
+		//quickAccessParent.setMargin(appIcon, );
+		quickAccessParent.setCenter(getSkinnable().quickAccessContainer);
+		
+		topStackPane.setAlignment(quickAccessParent, Pos.CENTER_LEFT);
+		topStackPane.getChildren().add(quickAccessParent);
+		
+		topStuffContainer.setCenter(topStackPane);
 		topStuffContainer.setRight(captionButtonsPane);
 		pane.setTop(topStuffContainer);
 		

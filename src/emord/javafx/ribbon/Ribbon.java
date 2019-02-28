@@ -38,10 +38,19 @@ import javafx.collections.ObservableList;
 import javafx.css.CssMetaData;
 import javafx.css.StyleableDoubleProperty;
 import javafx.css.StyleableProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.AccessibleAttribute;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Control;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Skin;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
 public class Ribbon extends Control {
@@ -64,7 +73,9 @@ public class Ribbon extends Control {
 
     private static final double DEFAULT_TAB_MAX_HEIGHT = Double.MAX_VALUE;
     
-    public Map<String, Color> contextualGroupHeadersMap = new HashMap<String, Color>(); 
+    public final HBox quickAccessContainer = new HBox();
+    
+    private Map<String, Color> contextualGroupHeadersMap = new HashMap<String, Color>(); 
     
     public Ribbon() {
     	getStyleClass().setAll(DEFAULT_STYLE_CLASS);
@@ -662,5 +673,47 @@ public class Ribbon extends Control {
     
     public Color getContextualGroupColor(String groupName) {
     	return contextualGroupHeadersMap.get(groupName);
+    }
+    
+    public void addToQuickAccess(EventHandler event, Node graphic) {
+    	try {
+    	boolean alreadyAdded = false;
+    	for (Node b : quickAccessContainer.getChildren()) {
+    		if ((((Button)b).getOnAction() == event) || (((Button)b).getOnAction().equals(event))) {
+    			alreadyAdded = true;
+    			break;
+    		}
+    	}
+    	
+    	if (!alreadyAdded) {
+    		Button button = new Button();
+    		if (graphic instanceof ImageView) {
+    			ImageView miniImage = new ImageView();
+    			miniImage.setImage(((ImageView)graphic).getImage());
+    			double dimensions = 1.3333333333333333333333333333333 * javafx.scene.text.Font.getDefault().getSize();
+    			miniImage.setFitWidth(dimensions);
+    			miniImage.setFitHeight(dimensions);
+    			button.setGraphic(miniImage);
+    		}
+    		
+    		button.getStyleClass().setAll("ribbon-quick-access-toolbar-button");
+    		button.setOnAction(event);
+    		
+    		ContextMenu menu = new ContextMenu();
+    		MenuItem item = new MenuItem();
+    		item.setOnAction((event2) -> {
+    			if (quickAccessContainer.getChildren().contains(button))
+    				quickAccessContainer.getChildren().remove(button);
+    		});
+    		item.setText("Remove from Quick Access Toolbar");
+    		menu.getItems().add(item);
+    		button.setContextMenu(menu);
+    		
+    		quickAccessContainer.getChildren().add(button);
+    	}
+    	}
+    	catch (Exception ex) {
+    		ex.printStackTrace();
+    	}
     }
 }

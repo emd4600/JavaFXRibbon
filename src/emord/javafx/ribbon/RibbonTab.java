@@ -100,9 +100,9 @@ private final StringProperty contextualGroupName = new SimpleStringProperty(this
 		getStyleClass().add(DEFAULT_STYLE_CLASS);
 		
 		contextualGroupNameProperty().addListener((obs, oldValue, newValue) -> {
-			ribbon.get().constructTabsPane();
+			if (getRibbon() != null)
+				getRibbon().constructTabsPane();
 		});
-		//
 	}
 	
 	
