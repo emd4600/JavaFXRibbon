@@ -22,6 +22,7 @@ package emord.javafx.ribbon;
 import com.sun.javafx.css.converters.SizeConverter;
 
 import emord.javafx.ribbon.skin.RibbonSkin;
+import emord.javafx.ribbon.skin.ScrollEvent;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -85,6 +86,15 @@ public class Ribbon extends Control {
 //    		
 //    		this.requestLayout();
 //    	});
+    	
+    	/*setOnScroll((ScrollEvent event) -> {
+			if ((event.getDeltaY() < 0) && (getSelectionModel().getSelectedIndex() < getTabs().size() - 1)) {
+				getSelectionModel().select(getSelectionModel().getSelectedIndex() + 1);
+			}
+			else if ((event.getDeltaY() > 0) && (getSelectionModel().getSelectedIndex() > 0)) {
+				getSelectionModel().select(getSelectionModel().getSelectedIndex() - 1);
+			}
+		});*/
     }
     
     
