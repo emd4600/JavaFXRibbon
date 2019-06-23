@@ -39,6 +39,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -173,6 +174,15 @@ public class RibbonSkin extends SkinBase<Ribbon> {
 		
 		getSkinnable().ribbonStateProperty().addListener((obs, oldValue, newValue) -> {
 			handleRibbonState(newValue);
+		});
+		
+		getSkinnable().setOnScroll((ScrollEvent event) -> {
+			if ((event.getDeltaY() < 0) && (getSkinnable().getSelectionModel().getSelectedIndex() < getSkinnable().getTabs().size() - 1)) {
+				getSkinnable().getSelectionModel().select(getSkinnable().getSelectionModel().getSelectedIndex() + 1);
+			}
+			else if ((event.getDeltaY() > 0) && (getSkinnable().getSelectionModel().getSelectedIndex() > 0)) {
+				getSkinnable().getSelectionModel().select(getSkinnable().getSelectionModel().getSelectedIndex() - 1);
+			}
 		});
 		
 		getSkinnable().getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, (event) -> {
