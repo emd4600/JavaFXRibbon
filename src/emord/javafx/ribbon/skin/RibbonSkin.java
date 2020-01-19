@@ -54,6 +54,7 @@ import javafx.scene.layout.Priority;
 public class RibbonSkin extends SkinBase<Ribbon> {
 	
 	private final BorderPane pane = new BorderPane();
+	private final BorderPane tabsBorderPane = new BorderPane();
 	/** The pane that displays the tab selection buttons. */
 	// No spacing between tabs
 	private final HBox tabsPane = new HBox(0);
@@ -77,8 +78,6 @@ public class RibbonSkin extends SkinBase<Ribbon> {
 			getSkinnable().getRibbonWindow().getChildren().add(contentPane);
 			
 			contentPane.setTranslateY(tabsPane.getBoundsInParent().getMaxY());
-			
-			expandButton.setGraphic(expandImage);
 		}
 		else {
 			// Reset
@@ -88,13 +87,16 @@ public class RibbonSkin extends SkinBase<Ribbon> {
 			if (state == RibbonState.EXPANDED) {
 				pane.setCenter(contentPane);
 				updateContentHeight(getSkinnable().getContentHeight());
-				
-				expandButton.setGraphic(minimizeImage);
 			}
 			else if (state == RibbonState.MINIMIZED) {
 				pane.setCenter(null);
 			}
 		}
+		
+		if (state == RibbonState.EXPANDED)
+			expandButton.setGraphic(minimizeImage);
+		else
+			expandButton.setGraphic(expandImage);
 	}
 	
 	private void constructTabsPane() {
@@ -112,7 +114,8 @@ public class RibbonSkin extends SkinBase<Ribbon> {
 	private void construct() {
 		
 		
-		pane.setTop(tabsPane);
+		tabsBorderPane.setCenter(tabsPane);
+		pane.setTop(tabsBorderPane);
 		
 		contentPane.setCenter(groupsContainer);
 		contentPane.getStyleClass().add("ribbon-content-area");
@@ -140,21 +143,20 @@ public class RibbonSkin extends SkinBase<Ribbon> {
 		expandImage = new ImageView(new Image(getSkinnable().getRibbonWindow().getResource("ribbon-expand.png")));
 		minimizeImage = new ImageView(new Image(getSkinnable().getRibbonWindow().getResource("ribbon-minimize.png")));
 		
-		// Technically it's not a ribbon button, but we don't want the standard button background
-		expandButton.getStyleClass().add(RibbonButton.DEFAULT_STYLE_CLASS);
-		expandButton.setPadding(new Insets(0));
+		expandButton.getStyleClass().add("ribbon-minimize-button");
 		expandButton.setOnAction((event) -> {
 			if (getSkinnable().getRibbonState() == RibbonState.EXPANDED) {
 				getSkinnable().setRibbonState(RibbonState.MINIMIZED);
 			}
-			else if (getSkinnable().getRibbonState() == RibbonState.DROPDOWN) {
+			else/* if (getSkinnable().getRibbonState() == RibbonState.DROPDOWN)*/ {
 				getSkinnable().setRibbonState(RibbonState.EXPANDED);
 			}
 		});
 		
 		expandButton.setGraphic(minimizeImage);
-		contentPane.setRight(expandButton);
-		BorderPane.setAlignment(expandButton, Pos.BOTTOM_RIGHT);
+		//contentPane.setRight(expandButton);
+		tabsBorderPane.setRight(expandButton);
+		BorderPane.setAlignment(expandButton, Pos.TOP_RIGHT);
 		
 		// -- Update Listeners -- //
 		
