@@ -12,7 +12,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import sporemodder.UIManager;
 
 public class BasicRibbonTest extends Application {
 	
@@ -74,7 +76,7 @@ public class BasicRibbonTest extends Application {
 		RibbonTab tab2 = createTab2();
 		
 		Ribbon ribbon = main.getRibbon();
-		ribbon.setContentHeight(115);
+		ribbon.setContentHeight(scaleByDpi(92));
 		ribbon.getTabs().addAll(tab1, tab2);
 		
 		addProgramButton(ribbon);
@@ -85,5 +87,10 @@ public class BasicRibbonTest extends Application {
 		
 		stage.setScene(scene);
 		stage.show();
+	}
+	
+	private double dpiScaling = Font.getDefault().getSize() / 12.0;
+	public double scaleByDpi(double inValue) {
+		return inValue * dpiScaling;
 	}
 }
