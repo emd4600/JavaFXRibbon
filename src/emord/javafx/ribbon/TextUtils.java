@@ -3,6 +3,7 @@ package emord.javafx.ribbon;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
+import javafx.scene.layout.Region;
 
 public class TextUtils {
 	static final Text helper;
@@ -27,7 +28,7 @@ public class TextUtils {
 
         helper.setWrappingWidth(0.0D);
         helper.setLineSpacing(0.0D);
-        double d = Math.min(helper.prefWidth(-1.0D), help0);
+        double d = Math.min(helper.prefWidth(Region.USE_COMPUTED_SIZE), help0);
         helper.setWrappingWidth((int) Math.ceil(d));
         d = Math.ceil(helper.getLayoutBounds().getWidth());
 

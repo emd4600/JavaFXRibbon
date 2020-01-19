@@ -1,6 +1,7 @@
 package emord.javafx.ribbon.skin;
 
 import emord.javafx.ribbon.RibbonGroup;
+import javafx.beans.binding.Bindings;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -8,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SkinBase;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.FlowPane;
+import javafx.geometry.Orientation;
 
 public class RibbonGroupSkin extends SkinBase<RibbonGroup> {
 
@@ -22,8 +25,11 @@ public class RibbonGroupSkin extends SkinBase<RibbonGroup> {
 		BorderPane groupPane = new BorderPane();
 		groupPane.getStyleClass().add("ribbon-group");
 		
-		HBox hbox = new HBox();
-		hbox.spacingProperty().bind(group.spacingProperty());
+		//HBox hbox = new HBox();
+		FlowPane hbox = new FlowPane();
+		hbox.setOrientation(Orientation.VERTICAL);
+		//hbox.setPrefWrapLength(400);
+		//hbox.spacingProperty().bind(group.spacingProperty());
 		
 //		hbox.getChildren().addListener((ListChangeListener<Node>) c -> {
 //			double totalHeight = 0;
@@ -77,10 +83,14 @@ public class RibbonGroupSkin extends SkinBase<RibbonGroup> {
 		BorderPane.setAlignment(title, Pos.CENTER);
 		
 		getChildren().add(groupPane);
+		hbox.prefWrapLengthProperty().bind(getSkinnable().heightProperty());//.bind(Bindings.add(0.0D, getSkinnable().heightProperty()));
 		
 		// Add listener
 		group.getNodes().addListener((ListChangeListener<Node>) c -> {
 			hbox.getChildren().setAll(c.getList());
+			//hbox.prefWidth(hbox.USE_COMPUTED_SIZE);
+			//group.prefWidth(group.USE_COMPUTED_SIZE);
+			//getSkinnable().getPrefWidth(getSkinnable().USE_COMPUTED_SIZE);
 		});
 	}
 }

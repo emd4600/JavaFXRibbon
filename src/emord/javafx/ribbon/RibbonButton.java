@@ -20,6 +20,8 @@
 package emord.javafx.ribbon;
 
 import emord.javafx.ribbon.skin.RibbonButtonSkin;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -27,8 +29,27 @@ import javafx.scene.control.Skin;
 import javafx.scene.image.ImageView;
 
 public class RibbonButton extends Button {
+	public static enum ControlSize {
+		SMALL,
+		MEDIUM,
+		LARGE
+	}
 	
 	public static final String DEFAULT_STYLE_CLASS = "ribbon-button";
+	
+	private final ObjectProperty<ControlSize> controlSize = new SimpleObjectProperty<ControlSize>(this, "controlSize", ControlSize.MEDIUM);
+    
+    public final ObjectProperty<ControlSize> controlSizeProperty() {
+    	return controlSize;
+    }
+    
+    public final ControlSize getControlSize() {
+    	return controlSize.get();
+    }
+    
+    public final void setControlSize(ControlSize state) {
+    	controlSize.set(state);
+    }
 	
 	public RibbonButton() {
 		this(null, null);
