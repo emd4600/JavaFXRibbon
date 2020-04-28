@@ -57,6 +57,7 @@ public class RibbonGroupSkin extends SkinBase<RibbonGroup> {
 ////			hbox.setScaleY(scale);
 //		});
 		
+		hbox.getStyleClass().add("content");
 		hbox.getChildren().addAll(group.getNodes());
 		
 		Label title = new Label();

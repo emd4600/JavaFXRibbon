@@ -98,6 +98,7 @@ public class ButtonTextHelper {
 				}
 				
 				SVGPath arrow = new SVGPath();
+				arrow.getStyleClass().add("ribbon-expand-arrow");
 				arrow.setContent("M 0 0 h 7 l -3.5 4 z");
 				arrowLabel.setGraphic(arrow);
 			}
